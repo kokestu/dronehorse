@@ -1,14 +1,21 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Feb 11 18:13:10 2016
+"""classes
 
-@author: Jonathan
+Defines useful classes for use in drone direction project.
+
 """
 
-import Exception
 from enum import Enum 
 
-class Squashed_horse_exception(Exception):
+__status__ = "Development"
+__version__ = "0.0.0"
+__authors__ = ["Blaine Rogers <blaine.rogers14@imperial.ac.uk>",
+               "Elliot Steele <elliot.steele14@imperial.ac.uk>",
+               "Jonathan Sutton <jonathan.sutton14@imperial.ac.uk>"]
+
+class SquashedHorseException(Exception):
+    """Excpetion thrown when a horse become overloaded."""
     pass
 
 class Move_type(Enum):
@@ -23,17 +30,33 @@ class Dest_type(Enum):
     warehouse = 0
     house = 1
 
-
 class Order():
+    """An order from a customer."""
+
     def __init__(self, order_id, dest, no_items):
+        """Initalises the order.
+
+        Args:
+            order_id (int): The (unique) id of the order.
+            dest ((int, int)): The square of the grid that the items must be
+                    delivered to.
+            no_items (int): The number of items that must be delivered.
+
+        """
         self.order_id = order_id
         self.dest = dest
         self.no_items = no_items
         self.items = dict()
         
     def add_item(self, item, amount):
+        """Adds an item to the order.
+
+        Args:
+            item (Item): The item to add it the order.
+            amount (int): The amount of the item to add.
+
+        """
         self.items[item] = amount
-        
         
 class Item():
     def __init__(self, item_id, weight):
