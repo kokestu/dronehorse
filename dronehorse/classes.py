@@ -6,9 +6,23 @@ Created on Thu Feb 11 18:13:10 2016
 """
 
 import Exception
+from enum import Enum 
 
 class Squashed_horse_exception(Exception):
     pass
+
+class Move_type(Enum):
+    deliver = 0
+    load = 1
+
+class Horse_state(Enum):
+    passive = 0
+    active = 1
+    
+class Dest_type(Enum):
+    warehouse = 0
+    house = 1
+
 
 class Order():
     def __init__(self, order_id, dest, no_items):
@@ -20,16 +34,20 @@ class Order():
     def add_item(self, item, amount):
         self.items[item] = amount
         
+        
 class Item():
     def __init__(self, item_id, weight):
         self.item_id = item_id
         self.weight = weight
+        
 
 class Horse():
     def __init__(self, pos, max_load):
         self.pos = pos
         self.max_load = max_load
         self.current_load = 0
+        self.state = Horse_state.passive
+        self.countdown = 0
         self.contents = dict()
         
     def add_items(self, items):
@@ -42,6 +60,9 @@ class Horse():
     def remove_items(self,items):
         for k, v in items:
             self.contents[k] -= items[k]
+            
+    
+            
         
 class Warehouse():
     def __init(self, pos, contents):
@@ -56,11 +77,12 @@ class Warehouse():
         for k, v in items:
             self.contents[k] -= items[k]
         
+        
 class State():
-    def __init__(self, size, turns, weights):
+    def __init__(self, size, no_horses, turns):
         self.size = size
+        self.no_horses = no_horses
         self.turns = turns
-        self.weights = weights
         self.horses = []
         self.warehouses = []
         self.orders = []
@@ -73,3 +95,12 @@ class State():
         
     def add_order(self,order):
         self.orders.append(order)
+        
+        
+class Move():
+    def __init__(self, move_type, horse_id, dest_id, item, amount):
+        self.move_type = move_type
+        self.horse_id = horse_id
+        self.dest_id = dest_id
+        self.item = item
+        self.amount = amount
