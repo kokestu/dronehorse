@@ -11,17 +11,17 @@ def parser(str_filename):
     for (str_line, i) in zip(strArr_lines, range(0, len(strArr_lines))):
         intArr_values = int(line.split())
 
-        if(i == 0):
+        if i == 0:
             state = State((intArr_values[0], intArr_values[1]), 
                     intArr_values[2], intArr_values[3], intArr_values[4])
-        elif(i == 1):
+        elif i == 1:
             int_numWeights = 0
-        elif(i == 2):
+        elif i == 2:
             state.add_weights(intArr_values)
-        elif(i == 3):
+        elif i == 3:
             numWarehouses = intArr_values[0]
-        elif(i > 4 && numWarehouses):
-            if(!i%2):
+        elif i >= 4 && numWarehouses:
+            if !i%2:
                 warehouse_tmp = Warehouse((intArr_values[0], intArr_values[1]),
                         int_numWeights)
             else:
@@ -31,7 +31,15 @@ def parser(str_filename):
         else:
             if int_numOrders == -1:
                 int_numOrders = intArr_values[0]
-
-        
-
+            elif i%2:
+                order = Order(
+            else
+                num = dict()
+                for value in intArr_values:
+                    if value in num.keys():
+                        num[value] += 1
+                    else:
+                        num[value] = 1
+                for key in num.keys():
+                    order.add_item((0, num[key]))    
     fileIn.close()

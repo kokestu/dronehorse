@@ -33,7 +33,7 @@ class Dest_type(Enum):
 class Order():
     """An order from a customer."""
 
-    def __init__(self, order_id, dest, no_items):
+    def __init__(self, dest):
         """Initalises the order.
 
         Args:
@@ -43,21 +43,13 @@ class Order():
             no_items (int): The number of items that must be delivered.
 
         """
-        self.order_id = order_id
         self.dest = dest
-        self.items = [0] * no_items
-        
-    def add_item(self, item, amount):
-        """Adds an item to the order.
+        self.items = []
 
-        Args:
-            item (Item): The item to add it the order.
-            amount (int): The amount of the item to add.
+    def add_item(item):
+        self.items.append(item)
 
-        """
-        self.items[item] = amount
-
-class Horse():
+   class Horse():
     """Definitely not a drone."""
 
     def __init__(self, pos, max_load, no_contents):
