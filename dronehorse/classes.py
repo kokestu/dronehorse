@@ -58,25 +58,6 @@ class Order():
         """
         self.items[item] = amount
 
-        
-class Item():
-    """An item to be delivered."""
-
-    def __init__(self, item_id, weight):
-        """Initialises the item.
-
-        Args:
-            item_id (int): The (unique) id of the item.
-            weight (int): The weight of the item in units.
-
-        """
-        self.item_id = item_id
-        self.weight = weight
-
-    def __repr__(self):
-        return "<item {}>".format(self.item_id)
-
-
 class Horse():
     """Definitely not a drone."""
 
@@ -140,7 +121,7 @@ class Horse():
             
         
 class Warehouse():
-    def __init(self, pos, no_contents):
+    def __init(self, pos, num_contents):
         self.pos = pos
         self.contents = []
         
