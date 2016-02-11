@@ -1,4 +1,4 @@
-from state import *
+from .state import *
 
 def parser(str_filename):
     state = None

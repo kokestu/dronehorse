@@ -6,6 +6,10 @@ Defines useful classes for use in drone direction project.
 
 """
 
+# ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ !
+# ALL OF THE DOCUMENTATION FOR THIS FILE IS WRONG
+# ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ !
+
 from enum import Enum 
 
 __status__ = "Development"
@@ -18,17 +22,18 @@ class SquashedHorseException(Exception):
     """Excpetion thrown when a horse become overloaded."""
     pass
 
-class Move_type(Enum):
+class MoveType(Enum):
     deliver = 0
     load = 1
 
-class Horse_state(Enum):
+class HorseState(Enum):
     passive = 0
     active = 1
     
-class Dest_type(Enum):
+class DestType(Enum):
     warehouse = 0
     house = 1
+
 
 class Order():
     """An order from a customer."""
@@ -46,10 +51,11 @@ class Order():
         self.dest = dest
         self.items = []
 
-    def add_item(item):
+    def add_item(self, item):
         self.items.append(item)
 
-   class Horse():
+
+class Horse():
     """Definitely not a drone."""
 
     def __init__(self, pos, max_load, no_contents):
@@ -63,9 +69,11 @@ class Order():
         self.pos = pos
         self.max_load = max_load
         self.current_load = 0
-        self.state = Horse_state.passive
+        self.state = HorseState.passive
         self.countdown = 0
-        self.contents = [0]*no_contents
+        self.current_move = None
+        self.contents = [0 for _ in range(no_contents)]
+
         
     def add_items(self, items, weights):
         """Adds items to the horse's load.
@@ -74,7 +82,7 @@ class Order():
             items ({Item -> int}): A dictionary of items and amounts.
 
         Examples:
-            >>> h = Horse((0, 0), 5)
+            >>> h = Horse((0, 0), 5, 3)
             >>> a = Item(0, 2)
             >>> b = Item(1, 1)
             >>> h.add_items({a: 2, b: 1}) # load horse to max capacity
@@ -107,9 +115,18 @@ class Order():
         for i in range(0,len(items)):
             self.contents[i] -= items[i]
             self.current_load -= weights[i]
+    
+    def give_move(self, move):
+        self.state = Horse_state.active
+        self.countdown = self.calculate_countdown(self.pos, move.dest_pos)
+        
+    def calculate_countdown(start, end):
+        return 0
+
+
 
     def __repr__(self):
-        return "<horse @{} with {}>".format(self.pos, self.contents)
+        return "<horse @{} +{}>".format(self.pos, self.contents)
             
         
 class Warehouse():
@@ -124,7 +141,7 @@ class Warehouse():
 
         """
         self.pos = pos
-        self.contents = [0]*no_contents
+        self.contents = [0 for _ in range(no_contents)]
         
     def add_items(self, items):
         """Adds an item to the warehouse.
@@ -206,21 +223,22 @@ class State():
         
         
 class Move():
+
     """A move from one state to another."""
 
-    def __init__(self, move_type, horse_id, dest_id, item, amount):
+    def __init__(self, move_type, dest_type, dest_pos, amounts):
         """Initializes the object.
 
         Args:
-            move_type (Move_type): The type of the move.
+            move_type (MoveType): The type of the move.
             horse_id (int): The id of the horse.
             dest_it (int): The id of the destination.
             item (???): ???
             amount (???): ???
 
         """
+
         self.move_type = move_type
-        self.horse_id = horse_id
-        self.dest_id = dest_id
-        self.item = item
-        self.amount = amount
+        self.dest_type = dest_type
+        self.dest_pos = dest_pos
+        self.amounts = amounts
