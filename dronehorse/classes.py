@@ -79,7 +79,9 @@ class Horse():
         self.current_load = 0
         self.state = HorseState.passive
         self.countdown = 0
+        self.current_move = None
         self.contents = [0 for _ in range(no_contents)]
+
         
     def add_items(self, items, weights):
         """Adds items to the horse's load.
@@ -121,6 +123,15 @@ class Horse():
         for i in range(0,len(items)):
             self.contents[i] -= items[i]
             self.current_load -= weights[i]
+    
+    def give_move(self, move):
+        self.state = Horse_state.active
+        self.countdown = self.calculate_countdown(self.pos, move.dest_pos)
+        
+    def calculate_countdown(start, end):
+        return 0
+
+
 
     def __repr__(self):
         return "<horse @{} +{}>".format(self.pos, self.contents)
@@ -220,9 +231,10 @@ class State():
         
         
 class Move():
+
     """A move from one state to another."""
 
-    def __init__(self, move_type, horse_id, dest_id, item, amount):
+    def __init__(self, move_type, dest_type, dest_pos, amounts):
         """Initializes the object.
 
         Args:
@@ -233,8 +245,8 @@ class Move():
             amount (???): ???
 
         """
+
         self.move_type = move_type
-        self.horse_id = horse_id
-        self.dest_id = dest_id
-        self.item = item
-        self.amount = amount
+        self.dest_type = dest_type
+        self.dest_pos = dest_pos
+        self.amounts = amounts
