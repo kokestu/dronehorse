@@ -45,7 +45,7 @@ class Order():
         """
         self.order_id = order_id
         self.dest = dest
-        self.items = [0] * no_items
+        self.items = [0 for _ in range(no_items)]
         
     def add_item(self, item, amount):
         """Adds an item to the order.
@@ -75,7 +75,7 @@ class Horse():
         self.current_load = 0
         self.state = Horse_state.passive
         self.countdown = 0
-        self.contents = [0]*no_contents
+        self.contents = [0 for _ in range(no_contents)]
         
     def add_items(self, items, weights):
         """Adds items to the horse's load.
@@ -134,7 +134,7 @@ class Warehouse():
 
         """
         self.pos = pos
-        self.contents = [0]*no_contents
+        self.contents = [0 for _ in range(no_contents)]
         
     def add_items(self, items):
         """Adds an item to the warehouse.
