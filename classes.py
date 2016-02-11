@@ -38,15 +38,23 @@ class Horse():
             self.current_load += v.weight
             if self.current_load > self.max_load:
                 raise Squashed_horse_exception()
+    
+    def remove_items(self,items):
+        for k, v in items:
+            self.contents[k] -= items[k]
         
 class Warehouse():
     def __init(self, pos, contents):
         self.pos = pos
-        self.contents = contents
+        self.contents = dict()
+        
+    def add_items(self, items):
+        for k, v in items:
+            self.contents[k] += items[k]
     
     def remove_items(self,items):
         for k, v in items:
-            self.items[k] -= items[k]
+            self.contents[k] -= items[k]
         
 class State():
     def __init__(self, size, turns, weights):
