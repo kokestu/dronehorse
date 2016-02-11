@@ -136,19 +136,40 @@ class Horse():
             self.contents[k] -= items[k]
 
     def __repr__(self):
-        return "<horse @{} with {}>".format(self.pos, self.items)
+        return "<horse @{} with {}>".format(self.pos, self.contents)
             
         
 class Warehouse():
+    """A warehouse that has items in it."""
+
     def __init(self, pos, no_contents):
+        """Initialises the warehouse.
+
+        Args:
+            pos ((int, int)): The position of the warehouse.
+            no_contents (???): NOT IMPLEMENTED
+
+        """
         self.pos = pos
         self.contents = []
         
     def add_items(self, items):
+        """Adds an item to the warehouse.
+
+        Args:
+            items (???): u wot m9
+
+        """
         for k, v in items:
             self.contents[k] += items[k]
     
-    def remove_items(self,items):
+    def remove_items(self, items):
+        """Removes an item from the warehouse.
+
+        Args:
+            items (???): u wot m9
+
+        """
         for k, v in items:
             self.contents[k] -= items[k]
         
