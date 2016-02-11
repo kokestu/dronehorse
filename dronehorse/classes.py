@@ -20,11 +20,6 @@ class Order():
     def add_item(self, item, amount):
         self.items[item] = amount
         
-class Item():
-    def __init__(self, item_id, weight):
-        self.item_id = item_id
-        self.weight = weight
-
 class Horse():
     def __init__(self, pos, max_load):
         self.pos = pos
@@ -44,9 +39,9 @@ class Horse():
             self.contents[k] -= items[k]
         
 class Warehouse():
-    def __init(self, pos, contents):
+    def __init(self, pos, no_contents):
         self.pos = pos
-        self.contents = dict()
+        self.contents = []
         
     def add_items(self, items):
         for k, v in items:
@@ -57,13 +52,13 @@ class Warehouse():
             self.contents[k] -= items[k]
         
 class State():
-    def __init__(self, size, turns, weights):
+    def __init__(self, size, no_horses, turns, max_horse_weight):
         self.size = size
         self.turns = turns
-        self.weights = weights
         self.horses = []
         self.warehouses = []
         self.orders = []
+        self.intTup_weights = ()
         
     def add_horse(self, horse):
         self.horses.append(horse)
@@ -73,3 +68,6 @@ class State():
         
     def add_order(self,order):
         self.orders.append(order)
+    
+    def add_weights(self, weights):
+        self.weights = weights
