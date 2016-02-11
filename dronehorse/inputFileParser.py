@@ -5,7 +5,9 @@ def parser(str_filename):
     numWarehouses = 0
     file_in = open(str_filename, 'r')
     
-    strArr_lines = file_in.readlines():
+    strArr_lines = file_in.readlines()
+    int_numWeights = 0
+    int_numOrders = -1
     for (str_line, i) in zip(strArr_lines, range(0, len(strArr_lines))):
         intArr_values = int(line.split())
 
@@ -13,20 +15,22 @@ def parser(str_filename):
             state = State((intArr_values[0], intArr_values[1]), 
                     intArr_values[2], intArr_values[3], intArr_values[4])
         elif(i == 1):
-            continue
+            int_numWeights = 0
         elif(i == 2):
             state.add_weights(intArr_values)
         elif(i == 3):
             numWarehouses = intArr_values[0]
         elif(i > 4 && numWarehouses):
             if(!i%2):
-                intTup_warehouseLoc = (intArr_values[0], intArr_values[1])
+                warehouse_tmp = Warehouse((intArr_values[0], intArr_values[1]),
+                        int_numWeights)
             else:
-                intList_items = []
-                for item in intArr_values:
-                    if !item:
-                        break
-                    intList_items.append(Item()
+                warehouse_tmp.add_items(intArr_values)
+                state.add_warehouse(warehouse_tmp)
+                numWarehouses-=1
+        else:
+            if int_numOrders == -1:
+                int_numOrders = intArr_values[0]
 
         
 
