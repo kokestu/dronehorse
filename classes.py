@@ -37,7 +37,7 @@ class Horse():
             self.contents[k] += items[k]
             self.current_load += v.weight
             if self.current_load > self.max_load:
-                raise Squashed_horse_exception()
+                raise Squashed_horse_exception("NeighSPLAT")
     
     def remove_items(self,items):
         for k, v in items:
