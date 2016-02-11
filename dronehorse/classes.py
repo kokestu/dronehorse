@@ -6,6 +6,10 @@ Defines useful classes for use in drone direction project.
 
 """
 
+# ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ !
+# ALL OF THE DOCUMENTATION FOR THIS FILE IS WRONG
+# ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ ! ~ !
+
 from enum import Enum 
 
 __status__ = "Development"
@@ -18,22 +22,23 @@ class SquashedHorseException(Exception):
     """Excpetion thrown when a horse become overloaded."""
     pass
 
-class Move_type(Enum):
+class MoveType(Enum):
     deliver = 0
     load = 1
 
-class Horse_state(Enum):
+class HorseState(Enum):
     passive = 0
     active = 1
     
-class Dest_type(Enum):
+class DestType(Enum):
     warehouse = 0
     house = 1
+
 
 class Order():
     """An order from a customer."""
 
-    def __init__(self, order_id, dest, no_items):
+    def __init__(self, dest):
         """Initalises the order.
 
         Args:
@@ -43,20 +48,11 @@ class Order():
             no_items (int): The number of items that must be delivered.
 
         """
-        self.order_id = order_id
         self.dest = dest
-        self.items = [0 for _ in range(no_items)]
-        
-    def add_item(self, item, amount):
-        """Adds an item to the order.
+        self.items = []
 
-        Args:
-            item (Item): The item to add it the order.
-            amount (int): The amount of the item to add.
-
-        """
-        self.items[item] = amount
-
+    def add_item(self, item):
+        self.items.append(item)
 
 
 class Horse():
@@ -73,7 +69,7 @@ class Horse():
         self.pos = pos
         self.max_load = max_load
         self.current_load = 0
-        self.state = Horse_state.passive
+        self.state = HorseState.passive
         self.countdown = 0
         self.current_move = None
         self.contents = [0 for _ in range(no_contents)]
@@ -86,7 +82,7 @@ class Horse():
             items ({Item -> int}): A dictionary of items and amounts.
 
         Examples:
-            >>> h = Horse((0, 0), 5)
+            >>> h = Horse((0, 0), 5, 3)
             >>> a = Item(0, 2)
             >>> b = Item(1, 1)
             >>> h.add_items({a: 2, b: 1}) # load horse to max capacity
@@ -130,7 +126,7 @@ class Horse():
 
 
     def __repr__(self):
-        return "<horse @{} with {}>".format(self.pos, self.contents)
+        return "<horse @{} +{}>".format(self.pos, self.contents)
             
         
 class Warehouse():
@@ -234,7 +230,7 @@ class Move():
         """Initializes the object.
 
         Args:
-            move_type (Move_type): The type of the move.
+            move_type (MoveType): The type of the move.
             horse_id (int): The id of the horse.
             dest_it (int): The id of the destination.
             item (???): ???
