@@ -45,8 +45,7 @@ class Order():
         """
         self.order_id = order_id
         self.dest = dest
-        self.no_items = no_items
-        self.items = dict()
+        self.items = [0] * no_items
         
     def add_item(self, item, amount):
         """Adds an item to the order.
@@ -58,29 +57,12 @@ class Order():
         """
         self.items[item] = amount
 
-        
-class Item():
-    """An item to be delivered."""
-
-    def __init__(self, item_id, weight):
-        """Initialises the item.
-
-        Args:
-            item_id (int): The (unique) id of the item.
-            weight (int): The weight of the item in units.
-
-        """
-        self.item_id = item_id
-        self.weight = weight
-
-    def __repr__(self):
-        return "<item {}>".format(self.item_id)
 
 
 class Horse():
     """Definitely not a drone."""
 
-    def __init__(self, pos, max_load):
+    def __init__(self, pos, max_load, no_contents):
         """Initialises the horse.
 
         Args:
@@ -93,9 +75,9 @@ class Horse():
         self.current_load = 0
         self.state = Horse_state.passive
         self.countdown = 0
-        self.contents = dict()
+        self.contents = [0]*no_contents
         
-    def add_items(self, items):
+    def add_items(self, items, weights):
         """Adds items to the horse's load.
 
         Args:
@@ -110,13 +92,13 @@ class Horse():
             <horse @(0, 0) with {<item 0>: 2, <item 1>: 1}>
 
         """
-        for k, v in items:
-            self.contents[k] += items[k]
-            self.current_load += v.weight
+        for i in range(0,len(items)):
+            self.contents[i] += items[i]
+            self.current_load += weights[i]
             if self.current_load > self.max_load:
                 raise SquashedHorseException("NeighSPLAT")
     
-    def remove_items(self,items):
+    def remove_items(self, items, weights):
         """Removes items from the horse's load.
 
         Args:
@@ -132,8 +114,9 @@ class Horse():
             <horse @(0, 0) with {<item 0>: 1, <item 1>: 1}>
 
         """
-        for k, v in items:
-            self.contents[k] -= items[k]
+        for i in range(0,len(items)):
+            self.contents[i] -= items[i]
+            self.current_load -= weights[i]
 
     def __repr__(self):
         return "<horse @{} with {}>".format(self.pos, self.contents)
@@ -151,7 +134,7 @@ class Warehouse():
 
         """
         self.pos = pos
-        self.contents = []
+        self.contents = [0]*no_contents
         
     def add_items(self, items):
         """Adds an item to the warehouse.
@@ -160,18 +143,19 @@ class Warehouse():
             items (???): u wot m9
 
         """
-        for k, v in items:
-            self.contents[k] += items[k]
+        for i in range(0,len(items)):
+            self.contents[i] += items[i]
     
-    def remove_items(self, items):
+    def remove_items(self,items):
         """Removes an item from the warehouse.
 
         Args:
             items (???): u wot m9
 
         """
-        for k, v in items:
-            self.contents[k] -= items[k]
+        for i in range(0,len(items)):
+            self.contents[i] -= items[i]
+
         
         
 class State():
@@ -193,7 +177,7 @@ class State():
         self.horses = []
         self.warehouses = []
         self.orders = []
-        self.intTup_weights = ()
+        self.weights = []
         
     def add_horse(self, horse):
         """Adds a horse to the state.
