@@ -119,21 +119,43 @@ class Horse():
             self.current_load -= weights[i]
 
     def __repr__(self):
-        return "<horse @{} with {}>".format(self.pos, self.items)
+        return "<horse @{} with {}>".format(self.pos, self.contents)
             
         
 class Warehouse():
+    """A warehouse that has items in it."""
+
     def __init(self, pos, no_contents):
+        """Initialises the warehouse.
+
+        Args:
+            pos ((int, int)): The position of the warehouse.
+            no_contents (???): NOT IMPLEMENTED
+
+        """
         self.pos = pos
         self.contents = [0]*no_contents
         
     def add_items(self, items):
+        """Adds an item to the warehouse.
+
+        Args:
+            items (???): u wot m9
+
+        """
         for i in range(0,len(items)):
             self.contents[i] += items[i]
     
     def remove_items(self,items):
+        """Removes an item from the warehouse.
+
+        Args:
+            items (???): u wot m9
+
+        """
         for i in range(0,len(items)):
             self.contents[i] -= items[i]
+
         
         
 class State():
