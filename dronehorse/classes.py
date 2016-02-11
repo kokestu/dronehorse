@@ -57,15 +57,37 @@ class Order():
 
         """
         self.items[item] = amount
+
         
 class Item():
+    """An item to be delivered."""
+
     def __init__(self, item_id, weight):
+        """Initialises the item.
+
+        Args:
+            item_id (int): The (unique) id of the item.
+            weight (int): The weight of the item in units.
+
+        """
         self.item_id = item_id
         self.weight = weight
-        
+
+    def __repr__(self):
+        return "<item {}>".format(self.item_id)
+
 
 class Horse():
+    """Definitely not a drone."""
+
     def __init__(self, pos, max_load):
+        """Initialises the horse.
+
+        Args:
+            pos ((int, int)): The position on the grid of the horse.
+            max_load (int): The maximum load of the horse.
+
+        """
         self.pos = pos
         self.max_load = max_load
         self.current_load = 0
@@ -74,17 +96,47 @@ class Horse():
         self.contents = dict()
         
     def add_items(self, items):
+        """Adds items to the horse's load.
+
+        Args:
+            items ({Item -> int}): A dictionary of items and amounts.
+
+        Examples:
+            >>> h = Horse((0, 0), 5)
+            >>> a = Item(0, 2)
+            >>> b = Item(1, 1)
+            >>> h.add_items({a: 2, b: 1}) # load horse to max capacity
+            >>> h # doctest: +NORMALIZE_WHITESPACE
+            <horse @(0, 0) with {<item 0>: 2, <item 1>: 1}>
+
+        """
         for k, v in items:
             self.contents[k] += items[k]
             self.current_load += v.weight
             if self.current_load > self.max_load:
-                raise Squashed_horse_exception("NeighSPLAT")
+                raise SquashedHorseException("NeighSPLAT")
     
     def remove_items(self,items):
+        """Removes items from the horse's load.
+
+        Args:
+            items ({Item -> int}): A dictionary of items and amounts.
+
+        Examples:
+            >>> h = Horse((0, 0), 5)
+            >>> a = Item(0, 2)
+            >>> b = Item(1, 1)
+            >>> h.add_items({a: 2, b: 1}) # load horse to max capacity
+            >>> h.remove_items({a: 1})
+            >>> h # doctest: +NORMALIZE_WHITESPACE
+            <horse @(0, 0) with {<item 0>: 1, <item 1>: 1}>
+
+        """
         for k, v in items:
             self.contents[k] -= items[k]
-            
-    
+
+    def __repr__(self):
+        return "<horse @{} with {}>".format(self.pos, self.items)
             
         
 class Warehouse():
