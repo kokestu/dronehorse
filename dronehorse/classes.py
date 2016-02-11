@@ -175,7 +175,18 @@ class Warehouse():
         
         
 class State():
+    """The state of the game, complete with warehouses, drones and orders."""
+
     def __init__(self, size, no_horses, turns, max_horse_weight):
+        """Intializes the state.
+
+        Args:
+            size ((int, int)): The size of the grid (rows, columns).
+            no_horses (int): The number of horses.
+            turns (int): The number of turns in the game.
+            max_horse_weight (int): The maximum weight a horse can carry.
+
+        """
         self.size = size
         self.no_horses = no_horses
         self.turns = turns
@@ -185,20 +196,55 @@ class State():
         self.intTup_weights = ()
         
     def add_horse(self, horse):
+        """Adds a horse to the state.
+
+        MAY BE DEPRECATED
+
+        """
         self.horses.append(horse)
         
-    def add_warehouse(self,warehouse):
+    def add_warehouse(self, warehouse):
+        """Adds a warhouse to the state.
+
+        Args:
+            warehouse (Warehouse): The warehouse to add.
+
+        """
         self.warehouses.append(warehouse)
         
-    def add_order(self,order):
+    def add_order(self, order):
+        """Adds an order to the state.
+
+        Args:
+            order (Order): The order to add.
+
+        """
         self.orders.append(order)
     
     def add_weights(self, weights):
+        """Adds weights to the state.
+
+        Args:
+            weights (???): The weights to add.
+
+        """
         self.weights = weights
         
         
 class Move():
+    """A move from one state to another."""
+
     def __init__(self, move_type, horse_id, dest_id, item, amount):
+        """Initializes the object.
+
+        Args:
+            move_type (Move_type): The type of the move.
+            horse_id (int): The id of the horse.
+            dest_it (int): The id of the destination.
+            item (???): ???
+            amount (???): ???
+
+        """
         self.move_type = move_type
         self.horse_id = horse_id
         self.dest_id = dest_id
